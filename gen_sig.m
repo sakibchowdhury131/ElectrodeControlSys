@@ -1,0 +1,10 @@
+function [sig] = gen_sig(fu, fl, L, Fs)
+s = tf('s');
+Ts = 1/Fs;
+t = 0:Ts:0.06;
+num = ((2*pi)^2)*(fu^2)*s;
+den = (fl*2*pi + s)*((fu*2*pi+s)^2);
+h_s = num/den;
+h_t = impulse(h_s, t);
+noise = wgn(L,1,0);
+sig = conv(noise, h_t);
